@@ -12,6 +12,7 @@ var shoot;
 var scoreSound;
 var font, font2;
 var level = 1;
+var offset;
 
 function preload() {
   shoot = loadSound('assets/shoot.wav');
@@ -45,10 +46,15 @@ function setup() {
   for(var i = 0; i<round(width/100); i++) {
   	
 	  for(var j = 0; j<round(height / 200); j++){
+	    
+	    if(j % 2)
+        offset = 1;
+      else
+        offset = 0;
 	  	
 	  	var pegsWide = w/(width/120);
 	  	
-	  	var px = width - w + ( i * (pegsWide) );
+	  	var px = width - w + ( i * (pegsWide) ) + (offset * width/14);
 		  var py = height - h + ( j * h/5 );
 		  createPeg('circle', px, py);
 
