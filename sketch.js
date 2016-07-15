@@ -2,7 +2,7 @@ var slash, peg, ball;
 var pegs;
 var grav = .2;
 var maxSpeed = 10;
-var ballCount = 511;
+var ballCount = 10;
 var w;
 var h;
 var speed = 3;
@@ -27,15 +27,15 @@ function preload() {
 function setup() {
 		var pegImg = loadImage("assets/circle.png");
 		var ballImg = loadImage("assets/ball.png");
-		
+
   createCanvas(windowWidth, windowHeight);
   background(20);
   noStroke();
   angleMode(DEGREES);
-  
+
   textFont(font);
   textSize(300);
-  
+
   var w = width;
   var h = height - (height/5);
 
@@ -46,55 +46,55 @@ function setup() {
   scoreSound.setVolume(1);
 
   //createBall();
-  
+
   for(var i = 0; i<round(width/100); i++) {
-  	
+
 	  for(var j = 0; j<round(height / 200); j++){
-	    
+
 	    if(j % 2)
         offset = 1;
       else
         offset = 0;
-	  	
+
 	  	var pegsWide = w/(width/120);
-	  	
+
 	  	var px = width - w + ( i * (pegsWide) ) + (offset * width/14);
 		  var py = height - h + ( j * h/5 );
 		  createPeg('circle', px, py);
 
 	  }
-	  
+
   }
-  
+
   createCup('rect', width/2);
-  
+
   textAlign(CENTER);
-  
+
   wallLeft = createSprite(0, height/2, 5, height);
   wallLeft.immovable = true;
-  
+
   wallRight = createSprite(width, height/2, 5, height);
   wallRight.immovable = true;
-  
+
   wallBottom = createSprite(width/2, height, width, 5);
   wallBottom.immovable = true;
 }
 
 function draw() {
   background('rgba(20,20,20, 0.50)');
-  
+
   moveAngle();
-  
+
   fill(30);
   text(score, width/2, height/2);
   textSize(45)
   text("Restart", width-100, 45);
-  
+
   textFont(font2);
   textSize(32);
   fill(255);
   text("tries: "+ballCount, 80, 50);
-  
+
   strokeWeight(3);
   stroke(255);
   push();
@@ -102,23 +102,23 @@ function draw() {
   rotate(angle-90);
   line(0, 0, 0, 50);
   pop();
-  
+
   balls.bounce(pegs);
   balls.bounce(balls);
   balls.collide(pegs, dampen);
   balls.bounce(wallRight);
   balls.bounce(wallLeft);
   balls.bounce(wallBottom, hitBottom);
-  
+
   for(i = 0; i < balls.length; i++){
-  
+
   	if(balls[i].velocity.y < maxSpeed){
 	  	balls[i].velocity.y += grav;
 	  } else {
 	  	balls[i].velocity.y = maxSpeed;
 	  }
   }
-  
+
   if(shake === true){
   	for(var t = 0; t < 1; t++){
   		cameraShake();
@@ -126,14 +126,14 @@ function draw() {
   	cameraShake();
   	shake = false;
   }
-  
+
   balls.collide(cups, getPoints);
-  
+
   drawSprites();
 }
 
 function mousePressed(){
-  
+
   if(mouseX > width-170 && mouseY < 45){
     score = 0;
     ballCount = 5;
@@ -208,7 +208,7 @@ function getPoints(ball){
 }
 
 function dampen(ball){
-	
+
 // 	ball.velocity.y *= 1;
 // 	ball.velocity.x *= 2;
 	//ball.velocity -= 0.5;
@@ -224,7 +224,7 @@ function moveAngle(){
   } else if (angle >= 180){
     angleLeft = false;
   }
-  
+
   if(angleLeft){
     angle+=speed;
   } else {
