@@ -5,6 +5,7 @@ var maxSpeed = 10;
 var ballCount = 511;
 var w;
 var h;
+var speed = 3;
 var shake = false;
 var score = 0;
 var shakeAmount = 5;
@@ -13,6 +14,8 @@ var scoreSound;
 var font, font2;
 var level = 1;
 var offset;
+var angle = 0;
+var angleLeft = false;
 
 function preload() {
   shoot = loadSound('assets/shoot.wav');
@@ -28,6 +31,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(20);
   noStroke();
+  angleMode(DEGREES);
   
   textFont(font);
   textSize(300);
@@ -79,8 +83,12 @@ function setup() {
 function draw() {
   background('rgba(20,20,20, 0.50)');
   
+  moveAngle();
+  
   fill(30);
   text(score, width/2, height/2);
+  textSize(45)
+  text("Restart", width-100, 45);
   
   textFont(font2);
   textSize(32);
@@ -89,7 +97,11 @@ function draw() {
   
   strokeWeight(3);
   stroke(255);
-  line(mouseX, 0, mouseX, 50);
+  push();
+  translate(mouseX, 0);
+  rotate(angle-90);
+  line(0, 0, 0, 50);
+  pop();
   
   balls.bounce(pegs);
   balls.bounce(balls);
@@ -121,6 +133,12 @@ function draw() {
 }
 
 function mousePressed(){
+  
+  if(mouseX > width-170 && mouseY < 45){
+    score = 0;
+    ballCount = 5;
+    return;
+  }
 	createBall();
 }
 
@@ -163,8 +181,8 @@ function createBall(){
 	 b.addImage(bImg);
 	 b.setCollider("circle", 0, 0, 15);
 	 //b.debug = true;
-	 var r = random(0, 180);
-	 b.setSpeed(5, r);
+	 print(angle);
+	 b.setSpeed(5, angle*60);
 	 balls.add(b);
 	 return b;
 	}
@@ -198,4 +216,18 @@ function dampen(ball){
 
 function hitBottom(ball){
 	ball.remove();
+}
+
+function moveAngle(){
+  if(angle <= 0){
+     angleLeft = true;
+  } else if (angle >= 180){
+    angleLeft = false;
+  }
+  
+  if(angleLeft){
+    angle+=speed;
+  } else {
+    angle-=speed;
+  }
 }
