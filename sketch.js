@@ -88,11 +88,11 @@ function draw() {
   fill(30);
   text(score, width/2, height/2);
   textSize(45)
+  fill(255);
   text("Restart", width-100, 45);
 
   textFont(font2);
   textSize(32);
-  fill(255);
   text("tries: "+ballCount, 80, 50);
 
   strokeWeight(3);
@@ -136,7 +136,7 @@ function mousePressed(){
 
   if(mouseX > width-170 && mouseY < 45){
     score = 0;
-    ballCount = 5;
+    ballCount = 10;
     return;
   }
 	createBall();
@@ -177,7 +177,7 @@ function createBall(){
 		shake = true;
 		//shoot.play();
 		var b = createSprite(mouseX, 0);
-		var bImg = loadImage("assets/ball0"+round(random(1,3))+".png");
+		var bImg = loadImage("assets/ball0"+round(random(1,4))+".png");
 	 b.addImage(bImg);
 	 b.setCollider("circle", 0, 0, 15);
 	 //b.debug = true;
