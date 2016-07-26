@@ -42,8 +42,8 @@ function setup() {
   pegs = new Group();
   balls = new Group();
   cups = new Group();
-  shoot.setVolume(1);
-  scoreSound.setVolume(1);
+  shoot.setVolume(0.2);
+  scoreSound.setVolume(0.2);
 
   //createBall();
 
@@ -165,7 +165,7 @@ function createCup(type, x) {
   var a = createSprite(x, height-120);
   var img  = loadImage("assets/cup.png");
   a.addImage(img);
-  a.setCollider(type, 0, 0, 120);
+  a.setCollider(type, 0, 0, 80);
   a.immovable = true;
   cups.add(a);
   return a;
@@ -175,7 +175,7 @@ function createBall(){
 	if(ballCount > 0){
 		ballCount--;
 		shake = true;
-		//shoot.play();
+		shoot.play();
 		var b = createSprite(mouseX, 0);
 		var bImg = loadImage("assets/ball0"+round(random(1,4))+".png");
 	 b.addImage(bImg);
@@ -204,7 +204,7 @@ function cameraShake(){
 function getPoints(ball){
 	score += 1;
 	ball.remove();
-	//scoreSound.play();
+	scoreSound.play();
 }
 
 function dampen(ball){
